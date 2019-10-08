@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .column {
+                float: left;
+                width: 30%;
+                padding: 5px; }
+
+                        /* Clear floats after image containers */
+            .row::after {
+                content: "";
+                clear: both;
+                display: table; }
+            table, th, td { border: 1px solid black; }
+
+        </style>
+    </head>
+
+    <body>
+        <h1>Class practice
+            
+        </h1>
+        <h2>Grand View</h2>
+        <h4>2019</h4>
+        <h5>Lesson 2/ Student: Mai Huynh</h5>
+        <hr/>
+
+        <p>This is a paragraph</p>
+        <p>This is <b>bold and strong</b>. This is <i>emphasized.</i> This's <strike>strikethrough!</strike></p>
+       <p>We do <sub>subscript</sub> or we can do <sup>superscript</sup></p>
+        <hr/>
+        <p>Quote something using <blockquote>blockquote tag</blockquote> <footer>and footer</footer> </p>
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+         industry's standard dummy text ever since the 1500s. </p>
+        <p>when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+        <blockquote>Lorem Ipsum</blockquote>
+        <hr/>
+        <pre>
+            Text in a pre element
+            is displayed in a fixed-width
+            font, and it preserves
+            both      spaces and
+            line breaks
+        </pre>
+        <hr/>
+        <h3>Put three images side by side.</h3>
+        <div class="row">
+                <div class="column">
+                  <img src="image1.jpg" alt="Snow">
+                </div>
+                <div class="column">
+                  <img src="image1.jpg" alt="Forest">
+                </div>
+                <div class="column">
+                  <img src="image1.jpg" alt="Mountains">
+                </div>
+        </div>   
+        <hr/>
+        <h2>Creating a table using different tags.</h2>        
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Quote (using <b>thead</b> and <b>th</b>)</th>
+                    <th>Movie</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>After all, tomorrow is another day.</td>
+                    <td>Gone with the wind, 1939</td>
+                </tr>
+                <tr>
+                    <td>Do or Not Do. There is no try</td>
+                    <td>Star Wars</td>
+                </tr>   
+            </tbody>
+        </table>
+        <hr/>
+        <h1>Links</h1>
+        <p>This is take you to W3School website. <a href="https://www.w3schools.com/html/default.asp">Click me</a></p>
+        <p>This opens W3School website in a new page/tab <a href="https://www.w3schools.com/" target="_blank">Click Me</a></p>
+        <hr/>
+        <h2>Add Some Lists Here</h2>
+        <h3>Unordered List</h3>
+            <ul>
+                <li>Coffee</li>
+                <li>Tea</li>
+                <li>Milk</li>
+            </ul>
+        <h3>Ordered List</h3>  
+            <ol>
+                <li>Coffee</li>
+                <li>Tea</li>
+                <li>Milk</li>
+            </ol> 
+        <hr/>
+        <p>Below is a form!. Using "Form" tags to create form.</p>
+        <form action="/action_page.php">
+            <label for="name">Your Name</label>
+            <input type="text" placeholder="name">
+            <br/><br/>
+            <label for="password"> Password</label>
+            <input type="password" placeholder="password">
+            <br/><br/>
+            <label for="email"> Email</label>
+            <input type="email" placeholder="email">
+            <p>Which one do you prefer (Radio Buttons)?</p>
+            <div>
+                <input type="radio" name="star" value="wars"> Star Wars<br>
+                <input type="radio" name="star" value="trek"> Star Trek<br>
+            </div>
+            <p>Check All That Applies (using "label for=".." to check the checkbox when clicking on label)</p>
+            
+            <div>
+                <input type="checkbox" id="html1" name="html1">
+                <label for="html1"> &lt;!Doctype HTML &gt; is at the beginning</label>
+            </div>       
+            <div>
+                <input type="checkbox" id="html2" name="html2">
+                <label for="html2"> &lt; !Doctype HTML &gt; is at the end</label>
+            </div>
+            <p>Please leave Comments if you want to contribute your opinions!</p>
+            <textarea rows="15" cols="80" name="comment"></textarea>
+            <br/>
+            <div>
+                <input type="submit" value="Submit Form">
+                <input type="reset" value="Reset To Clear the Form">
+                <button onclick="alert('submitting')">Submit</button>
+            </div>
+
+        </form>
+        <br/>  <br/>  <br/> <br/>
+    </body>
+</html>

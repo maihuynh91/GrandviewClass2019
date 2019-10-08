@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <style>
+            #dragImage{
+                width: 400px;
+                height: 300px;
+                background-color: antiquewhite;
+                margin: auto; }
+            #output{
+                width: 800px;
+                background: yellowgreen;
+                height: 500px;
+                margin: auto; }
+        </style>
+
+        <script>
+            let result;
+               function  myFunction(){
+                result = (document.getElementById("urlOfImage").value);
+                document.getElementById("image").src=result;
+                }
+        </script>
+    </head>
+    <body>
+        <div id="dragImage">Drag image here</div>
+
+        <div><input type="text" id="urlOfImage" /><button onclick="myFunction()">Display image</button></div>
+
+        <div id="output"><img id ="image"></div>
+    </body>
+</html>

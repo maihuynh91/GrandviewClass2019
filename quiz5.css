@@ -1,0 +1,28 @@
+.content-box{color: rgb(90, 4, 4);
+    font: Arial;
+    font-family: "Times New Roman", Times, serif;
+    border-top: 5px solid black;
+    border-left: 5px dashed red;
+    border-right: 5px dashed blue;
+    border-bottom: 5px solid turquoise;
+    text-align: left
+}
+
+
+h1{
+    text-align: center;
+}
+
+div >div.close-button {
+        border-radius: 4px; cursor: pointer;position: relative;
+        float: right;
+        background: red;
+        color:black;
+        top: -85px;
+        right: -10px;
+}
+
+div > div.special-text{
+    visibility: hidden;
+    display: none
+}
