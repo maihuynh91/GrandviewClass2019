@@ -6,7 +6,6 @@ if (
     isset($_GET['action']) && $_GET['action'] == 'register_user' &&
     !empty($_GET['email']) && !empty($_GET['fname'] && !empty($_GET['lname']))
 ) {
-
     $data = [
         'email'     => htmlspecialchars($_GET['email']),
         'status'    => 'subscribed',
@@ -51,7 +50,6 @@ function syncMailchimp($data)
     $httpCode = null;
     // printRequestInfo($url, $json);
     $httpCode = executeRequest($url, $json);
-
     return $httpCode;
 }
 

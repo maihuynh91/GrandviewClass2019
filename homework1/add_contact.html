@@ -6,53 +6,52 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/notie/4.3.1/notie.min.css">
 </head>
 <body>
-        <div class="div1">
-                <div style="text-align: center"><img src="image.png" /></div>
-                <br>
+    <div class="div1">
+        <div style="text-align: center"><img src="image.png" /></div>
+        <br>
+        <form class="form" action="" onsubmit="return sumbmitFormAjax(event)">
+            <p><input type="text" name="fname" id="fnameInput" placeholder="First Name"></p>
+            <p><input type="text" name="lname" id="lnameInput" placeholder="Last Name"></p>
+            <p><input type="text" name="email" id="emailInput" placeholder="Email"></p>
+            <p><input type="Submit" name="submitContact"  id="btn" ></p>
+        </form>
+    </div>
+
+    <div id="add_contact_result" style="background-color: green; font-weight:bold;"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notie/4.3.1/notie.min.js"></script>
+    <script>
+        function createAlert(notieOptions){
+            notie.alert(notieOptions);
+                    }
+        function sumbmitFormAjax(e){
+            e.preventDefault();
+            console.log(e);
+            
+            var fname = document.getElementById('fnameInput').value;
+            var lname = document.getElementById('lnameInput').value;
+            var email = document.getElementById('emailInput').value;   
+            var xmlhttp;
+
+            if (window.XMLHttpRequest) {
+                    // code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+            } else {
+                    // code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                /*  document.getElementById("add_contact_result").innerHTML = this.responseText; */
+                createAlert(JSON.parse(this.responseText));
+                setTimeout(()=>location.reload(),5000);
+                }
+            };
+            xmlhttp.open("GET","add_contact_ajax.php?action=register_user&fname="+fname+"&lname="+lname+"&email="+email,true);
+            xmlhttp.send();
+
+            return false;
+                 }
+    </script>
     
-<form class="form" action="" onsubmit="return sumbmitFormAjax(event)">
-    <p><input type="text" name="fname" id="fnameInput" placeholder="First Name"></p>
-    <p><input type="text" name="lname" id="lnameInput" placeholder="Last Name"></p>
-    <p><input type="text" name="email" id="emailInput" placeholder="Email"></p>
-    <p><input type="Submit" name="submitContact"  id="btn" ></p>
-</form>
-</div>
-<div id="add_contact_result" style="background-color: green; text-color:red; font-weight:bold;"></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/notie/4.3.1/notie.min.js"></script>
-<script>
-function createAlert(notieOptions){
-    notie.alert(notieOptions);
-}
-function sumbmitFormAjax(e){
-    e.preventDefault();
-    console.log(e);
-    
-    var fname = document.getElementById('fnameInput').value;
-    var lname = document.getElementById('lnameInput').value;
-    var email = document.getElementById('emailInput').value;
-  
-    var xmlhttp;
-
-    if (window.XMLHttpRequest) {
-            // code for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp = new XMLHttpRequest();
-    } else {
-            // code for IE6, IE5
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-           /*  document.getElementById("add_contact_result").innerHTML = this.responseText; */
-           createAlert(JSON.parse(this.responseText));
-           setTimeout(()=>location.reload(),5000);
-        }
-    };
-    xmlhttp.open("GET","add_contact_ajax.php?action=register_user&fname="+fname+"&lname="+lname+"&email="+email,true);
-    xmlhttp.send();
-
-    return false;
-}
-
-</script>
 </body>
 </html>
