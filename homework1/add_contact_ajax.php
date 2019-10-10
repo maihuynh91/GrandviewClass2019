@@ -1,9 +1,7 @@
 <?php
 
-
 include_once('credentials.php');
-
-
+$alert_message = '';
 if (
     isset($_GET['action']) && $_GET['action'] == 'register_user' &&
     !empty($_GET['email']) && !empty($_GET['fname'] && !empty($_GET['lname']))
@@ -15,13 +13,12 @@ if (
         'firstname' => htmlspecialchars($_GET['fname']),
         'lastname'  => htmlspecialchars($_GET['lname'])
     ];
-    if (!empty($_GET['reason'])) {
-        $data['reason'] =  htmlspecialchars($_GET['reason']);
-    }
+
     $dbResultString = addContactToDb($servername, $username, $password, $dbname, $data);
     syncMailchimp($data);
 } else {
-    echo "This request is missing data and could not be executed";
+    $alert_message = "This request is missing data and could not be executed";
+    create_alert("error", $alert_message);
 }
 
 
@@ -52,7 +49,7 @@ function syncMailchimp($data)
     ]);
 
     $httpCode = null;
-    printRequestInfo($url, $json);
+    // printRequestInfo($url, $json);
     $httpCode = executeRequest($url, $json);
 
     return $httpCode;
@@ -92,17 +89,13 @@ function addContactToDb($servername, $username, $password, $dbname, $data)
 {
     $conn = mysqli_connect($servername, $username, $password, $dbname);
     if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    } else {
-        echo "connection succeed";
-    }
+        $alert_message = "Connection failed: " . mysqli_connect_error();
+        create_alert("error", $alert_message);
+        return;
+    } 
     $firstN = htmlspecialchars($data["firstname"]);
     $email = htmlspecialchars($data["email"]);
     $lastN = htmlspecialchars($data["lastname"]);
-    $reason = null;
-    if ($data['reason']) {
-        $reason = htmlspecialchars($data["reason"]);
-    }
     $visit = 1;
 
     $sql = $conn->prepare("SELECT * FROM millionCup WHERE email = ?");
@@ -110,33 +103,45 @@ function addContactToDb($servername, $username, $password, $dbname, $data)
     $sql->execute();
     $result = $sql->get_result();
 
-    //$result = mysqli_query($conn, $sql);
-    // $resultCheck = mysqli_num_rows($result);
+
     if ($result->num_rows < 1) {
         //insert into db
-        $stmt = $conn->prepare("INSERT INTO millionCup(firstname, lastname, email, reason, visit) VALUES (?,?,?,?,?);");
-        $stmt->bind_param("ssssi", $firstN, $lastN, $email, $reason, $visit);
+        $stmt = $conn->prepare("INSERT INTO millionCup(firstname, lastname, email, visit) VALUES (?,?,?,?);");
+        $stmt->bind_param("sssi", $firstN, $lastN, $email, $visit);
         $stmt->execute();
         $result2 = $stmt->get_result();
-        printLine("Welcome to Million Cup! You registered sucessfully.");
+        $alert_message =  "Welcome to Million Cup! You registered sucessfully.";
     } else {
         while ($row = $result->fetch_assoc()) {
             $email = $row["email"];
             $visit = $row["visit"] + 1;
             $update_visit_stmt = "UPDATE millioncup SET visit = '$visit' WHERE email = '$email'";
             if ($conn->query($update_visit_stmt) === FALSE) {
-                printLine("Cannot update '$update_visit_stmt'");
+                $alert_message = "Cannot update '$update_visit_stmt'";
+                create_alert("error", $alert_message);
+                return;
             } else {
-                printLine("Welcome Back " . $email . " !");
+                $alert_message = "Welcome Back " . $email . "!";
             }
         }
     };
     $conn->close();
-    printLine("You have visited $visit times");
+    $alert_message .= "<br />You have visited $visit times";
+    create_alert("success",$alert_message);
 }
-function printLine($line_to_print){
+function printLine($line_to_print)
+{
     echo "<pre>";
     print_r($line_to_print);
     echo "</pre>";
     echo "<br/>\n";
+}
+function create_alert($type, $message)
+{
+    $json = json_encode([
+        'type' => $type,
+        'text' => $message
+        ]);
+
+    echo $json;
 }

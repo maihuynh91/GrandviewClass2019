@@ -2,21 +2,27 @@
 <html lang="en">
 <head>
     <title>Adding contact with Mailchimp</title>
+    <link rel="stylesheet" type="text/css" href="myStyle.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/notie/4.3.1/notie.min.css">
 </head>
 <body>
+        <div class="div1">
+                <div style="text-align: center"><img src="image.png" /></div>
+                <br>
     
-<form action="" onsubmit="return sumbmitFormAjax(event)">
+<form class="form" action="" onsubmit="return sumbmitFormAjax(event)">
     <p><input type="text" name="fname" id="fnameInput" placeholder="First Name"></p>
     <p><input type="text" name="lname" id="lnameInput" placeholder="Last Name"></p>
     <p><input type="text" name="email" id="emailInput" placeholder="Email"></p>
-    <p><input type="text" name="reason" id="reasonInput" placeholder="Reason"></p>
-    <p><input type="Submit" name="submitContact" id="" ></p>
+    <p><input type="Submit" name="submitContact"  id="btn" ></p>
 </form>
-
+</div>
 <div id="add_contact_result" style="background-color: green; text-color:red; font-weight:bold;"></div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/notie/4.3.1/notie.min.js"></script>
 <script>
-
+function createAlert(notieOptions){
+    notie.alert(notieOptions);
+}
 function sumbmitFormAjax(e){
     e.preventDefault();
     console.log(e);
@@ -24,9 +30,7 @@ function sumbmitFormAjax(e){
     var fname = document.getElementById('fnameInput').value;
     var lname = document.getElementById('lnameInput').value;
     var email = document.getElementById('emailInput').value;
-    var reason = document.getElementById('reasonInput').value;
-
-
+  
     var xmlhttp;
 
     if (window.XMLHttpRequest) {
@@ -38,19 +42,17 @@ function sumbmitFormAjax(e){
     }
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("add_contact_result").innerHTML = this.responseText;
+           /*  document.getElementById("add_contact_result").innerHTML = this.responseText; */
+           createAlert(JSON.parse(this.responseText));
+           setTimeout(()=>location.reload(),5000);
         }
     };
-    xmlhttp.open("GET","add_contact_ajax.php?action=register_user&fname="+fname+"&lname="+lname+"&email="+email+"&reason="+reason,true);
+    xmlhttp.open("GET","add_contact_ajax.php?action=register_user&fname="+fname+"&lname="+lname+"&email="+email,true);
     xmlhttp.send();
 
     return false;
 }
 
 </script>
-
-
-
-
 </body>
 </html>

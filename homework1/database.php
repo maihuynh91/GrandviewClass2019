@@ -36,7 +36,6 @@ include_once("credentials.php");
         firstname VARCHAR(20) NOT NULL,
         lastname VARCHAR(20) NOT NULL,
         email VARCHAR(50),
-        reason VARCHAR(200),
         visit int(10)
     )";
 
